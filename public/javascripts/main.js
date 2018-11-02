@@ -1,11 +1,10 @@
-// @file: main.js
 function onScript(){
 
 	var socket = io.connect(window.location.href);
 
 
 	var mymap = L.map('mimapa',{
-		 center: [19.210216666666668, -96.17367333333334]
+		 center: [21.900850, -102.316342]
 		,zoom:16
 	});
 
@@ -34,28 +33,36 @@ function onScript(){
 		computer.bindPopup("Usuarios aqui");
 	}
 
-var gageTemp	=0;
-var gageHum	= 0;
-var gageTemp2	=0;
-var gagePress	= 0;
+	var gageCO2 = 0;
+	var gageTVOC = 0;
+	var gageTemp = 0;
+	var gagePress = 0;
+	var gageALT = 0;
+	var gageHum = 0;
+	var gageVolt = 0;
+	var gageSSID = 0;
 
 	socket.on('datos:sensors', function (data) {
 		console.log(data);
 		var sen = data.sensores;
-		gageTemp2	= sen.temp2;
 
+		gageCO2 = sen.co2
+		gageTVOC = sen.tvoc
+		gageTemp = sen.temp;
+		gagePress = sen.press;
+		gageALT = sen.alt; 
 		gageHum	= sen.hume;
+		gageVolt = sen.volt;
+		gageSSID = sen.ssid;
 
-		gageTemp	= sen.temp;
-
-		gagePress	= sen.press;
-
+		CO2.refresh(gageCO2);
+		TVOC.refresh(gageTVOC);
 		Temperatura.refresh(gageTemp);
-		Humedad.refresh(gageHum);
-
 		Presion.refresh(gagePress);
-		Temperatura2.refresh(gageTemp2);
-
+		Altitud.refresh(gageALT);
+		Humedad.refresh(gageHum);
+		Voltaje.refresh(gageVolt);
+		SSID.refresh(gageSSID);
 
 	});
 
@@ -69,7 +76,7 @@ var gagePress	= 0;
 
 	}
 
-	var gps = L.marker([19.210216666666668, -96.17367333333334]);
+	var gps = L.marker([21.900850, -102.316342]);
 	mymap.addLayer(gps);
 	var posizioni = [];
 
@@ -84,38 +91,69 @@ var gagePress	= 0;
 
 	});
 
+	var CO2 = new JustGage({
+		id: "gaugeCO2",
+		value: gageCO2,
+		min: -60,
+		max: 90,
+		title: "Co2"
+	});
+
+	var TVOC = new JustGage({
+		id: "gaugeTVOC",
+		value: gageTVOC,
+		min: -60,
+		max: 90,
+		title: "TVOC"
+	});
+
 	var Temperatura = new JustGage({
-		id: "gauge",
+		id: "gaugeTEMP",
 		value: gageTemp,
 		min: -60,
 		max: 90,
 		title: "Temperatura"
 	});
 
-	var Humedad = new JustGage({
-    id: "gauge1",
-    value: gageHum,
-    min: 0,
-    max: 100,
-    title: "Humedad"
-  });
-
 	var Presion = new JustGage({
-    id: "gauge2",
-    value: gagePress,
-    min: 250,
-    max: 1100,
-    title: "Presion"
-  });
+		id: "gaugePres",
+		value: gagePress,
+		min: 250,
+		max: 1100,
+		title: "Presion"
+ 	});
 
-	var Temperatura2 = new JustGage({
-		id: "gauge3",
-		value: gageTemp2,
-		min: -60,
-		max: 90,
+	 var Altitud = new JustGage({
+		id: "gaugeAlt",
+		value: gageALT,
+		min: 0,
+		max: 40000,
+		title: "Altura"
+	 });
+	 
+	var Humedad = new JustGage({
+		id: "gaugeHUM",
+		value: gageHum,
+		min: 0,
+		max: 100,
+		title: "Humedad"
+  	});
+
+	var Voltaje = new JustGage({
+		id: "gaugeVolt",
+		value: gageVolt,
+		min: 0,
+		max: 3,
 		title: "Temperatura 2"
 	});
 
+	var SSID = new JustGage({
+		id: "gaugeSSID",
+		value: gageSSID,
+		min: -130,
+		max: -20,
+		title: "SSID"
+ 	});
 
 }
 
