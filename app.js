@@ -68,6 +68,7 @@ io.sockets.on('connection', function(socket){
       var today = new Date();
       var payload = stringParse(line);
 			var pos = {
+          ID: payload.ID,
 				 lat: payload.lat,
          lng: payload.lon
 			};
