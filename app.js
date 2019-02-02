@@ -73,13 +73,13 @@ io.sockets.on('connection', function(socket){
 			};
       //CO2,TVOC,TEMP,PRESS,ALT,HUM,VOLT
       var sen = {
-        co2: payload.co2
-        tvoc: payload.tvoc
+        co2: payload.co2,
+        tvoc: payload.tvoc,
         temp: payload.temp,
         press: payload.pres,
         alt: payload.alt,
         hume: payload.hum,
-        batt: payload.volt
+        batt: payload.volt,
         ssid: payload.ssid  
 			};
 
