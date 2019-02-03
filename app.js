@@ -15,21 +15,26 @@ var stringParse = function(recvString){
 var items = recvString.split(',');
 	return {
     //ID,CO2,TVOC,TEMP,PRESS,ALT,HUM,VOLT,LAT,LONG,SSID
+    // A1,CO2,  TVOC, temp,  Pressure, AltitudeMeters,Humidity, voltage, radiationValuelat, long, altitude_gps,speed,RSSI
+    // A1,2380, 301,  20.55, 90633.50,  930.63,       20.92,     1.00,    0.00,              0,    0,           0,    0,             -48
 		 ID:  items[0]
 		,co2: items[1]
 		,tvoc: items[2]
     ,temp: items[3]
 		,pres: items[4]
 		,alt: items[5]
-		,hum: items[6]
-		,volt: items[7]
-		,lat: items[8]
-		,lon: items[9]
-		,ssid: items[10]
+    ,hum: items[6]
+    ,volt: items[7]
+		,rad: items[8]
+		,lat: items[9]
+    ,lon: items[10]
+    ,alt_gps: items[11]
+    ,speed: items[12]
+		,ssid: items[13]
 	}
 }
 
-var port = new serialport('/dev/cu.usbmodem14101', {
+var port = new serialport('/dev/cu.usbmodem14121', {
 //var port = new serialport('COM20', {
 	 baudrate: 9600
 	,parser: serialport.parsers.readline('\n')
