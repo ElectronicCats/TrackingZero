@@ -1,26 +1,16 @@
 extends layout
 
 block content
+	h1 Panel general de monitoreo
+		img(src='assets/EC_logo.png', style='width:120px;height:100px;position:absolute; TOP:10px; LEFT:1080px;')
+		div.header-container
+			h2.muted Tracking CatSat Zero.
+			
+		hr
 	div.container
-
 		div.container-narrow
 			div.masthead
-		
+			div.img-polaroid(id="mimapa")
 		hr
 
-		div.container-fluid
-			div.row-fluid
-				div.span9
-					div.img-polaroid(id="mimapa")
-				div.span3
 
-					div.well.sidebar-nav
-						ul.nav.nav-list
-							li.nav-header(id="gaugeCO2")
-							li.active(id="gaugeTVOC")
-							li.active(id="gaugeTEMP")
-							li.active(id="gaugePres")
-							li.active(id="gaugeAlt")
-							li.active(id="gaugeHUM")
-							li.active(id="gaugeVolt")
-							li.active(id="gaugeSSID")
