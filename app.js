@@ -12,19 +12,17 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
-const fs = require('fs');
+  , path = require('path')
 
-var math = require('mathjs');
+const fs = require('fs');
 
 var app = express();
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-var serialport = require('serialport')
-var math = require('mathjs')
+var serialport = require('serialport');
+
 
 var stringParse = function(recvString){
 var items = recvString.split(',');
@@ -44,10 +42,11 @@ var items = recvString.split(',');
 	}
 }
 
-// Gracias a //kike nuevo version nodejs 10.xxx y serialport 7.xxx
+// Gracias a kike nuevo version nodejs 10.xxx y serialport 7.xxx
 const Readline = require('@serialport/parser-readline')
 
 var port = new serialport('/dev/cu.usbserial-A9M9DV3R', {
+
 //var port = new serialport('COM20', {
 	 baudrate: 9600
 });
@@ -72,19 +71,18 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
-
 
 io.sockets.on('connection', function(socket){
 	socket.on('coords:me', function(data){
 		console.log(data);
 		socket.broadcast.emit('coords:user', data);
-	});
+  });
 
 	parser.on('data', function(line){
       var today = new Date();
       var payload = stringParse(line);
 			var pos = {
+          ID: payload.ID,
 				 lat: payload.lat,
          lng: payload.lon
 			};
@@ -105,10 +103,10 @@ io.sockets.on('connection', function(socket){
 				 latlng: pos
 			}); //Envia informacion de coordenadas a frontend
 
-    socket.emit('datos:sensors', {
+    /*socket.emit('datos:sensors', {
           sensores: sen
       }); //Envia informacion de sensores a frontend
-
+    */
     fs.open('info.txt', 'wx', (err, fd) => {
       if (err) {
         if (err.code === "EEXIST") {
