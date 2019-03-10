@@ -1,3 +1,15 @@
+
+/**
+ *  Example of Panel Ground Station
+ *  Node JS
+ *  Autors:
+ *  Iddar Olivares
+ *  Andres Sabas
+ *  Eduardo Contreras
+ **/
+
+//Module dependencies.
+
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
@@ -6,6 +18,7 @@ var express = require('express')
 const fs = require('fs');
 
 var app = express();
+
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var serialport = require('serialport');
@@ -29,11 +42,16 @@ var items = recvString.split(',');
 	}
 }
 
-var port = new serialport('/dev/cu.usbmodem14101', {
+// Gracias a kike nuevo version nodejs 10.xxx y serialport 7.xxx
+const Readline = require('@serialport/parser-readline')
+
+var port = new serialport('/dev/cu.usbserial-A9M9DV3R', {
+
 //var port = new serialport('COM20', {
 	 baudrate: 9600
-	,parser: serialport.parsers.readline('\n')
 });
+
+const parser = port.pipe(new Readline({ delimiter: '\n' }))
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -60,7 +78,7 @@ io.sockets.on('connection', function(socket){
 		socket.broadcast.emit('coords:user', data);
   });
 
-	port.on('data', function(line){
+	parser.on('data', function(line){
       var today = new Date();
       var payload = stringParse(line);
 			var pos = {
