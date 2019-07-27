@@ -47,10 +47,7 @@ var items = recvString.split(',');
 // Gracias a //kike nuevo version nodejs 10.xxx y serialport 7.xxx
 const Readline = require('@serialport/parser-readline')
 
-var port = new serialport('/dev/cu.usbserial-A9M9DV3R', {
-//var port = new serialport('COM20', {
-	 baudrate: 9600
-});
+var port = new serialport('/dev/cu.usbmodem14101', {baudRate: 9600});
 
 const parser = port.pipe(new Readline({ delimiter: '\n' }))
 
