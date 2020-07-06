@@ -1,3 +1,7 @@
+<a href="https://github.com/sponsors/ElectronicCats">
+  <img src="https://electroniccats.com/wp-content/uploads/2020/07/Badge_GHS.png" height="104" />
+</a>
+
 # TrackingZero
 
 Este es un sistema basado en nodejs utilizado para el seguimiento en estación terrena del CatSat Zero en tiempo real por medio de GPS y comunicación LoRa.
